@@ -2,6 +2,8 @@
 <html>
 <body>
 <?php
+    include_once 'dd.php';
+
     $servername = "localhost";
     $username = "root";
     $password = "";
@@ -19,27 +21,28 @@
     }
     $retval = mysqli_select_db( $conn, 'family' );
 
-    //$all = "SELECT p.id, p.name, p.surname, c.name AS childname FROM parents p JOIN children c ON p.id=c.parent_id;";
-    $par = "SELECT id, name, surname FROM parents";
-    $result = mysqli_query($conn, $par);
-    
-    if (mysqli_num_rows($result) > 0) {
-        while($row = mysqli_fetch_assoc($result)) {
-            echo "Name: " . $row["name"] . "<br> Surname: " . $row["surname"] . "<br><br>";
+    $query = "SELECT id, name, surname FROM parents";
+    $parentsQuery = mysqli_query($conn, $query);
+    $parents = [];
 
-            $chld = "SELECT name FROM children WHERE parent_id=" . $row["id"];
-            $reschild = mysqli_query($conn, $chld);
-            while($rowchld = mysqli_fetch_assoc($reschild)){
-                if(!empty($rowchld["name"])) echo "Child Name: " . $rowchld["name"] . "<br>";
-            }
-            echo "<br>";
-        }
-    } 
-    else {
-        echo "0 results";
+    $querychld = "SELECT parent_id, name FROM children";
+    $childrenQuery = mysqli_query($conn, $querychld);
+    $children = [];
+    
+    while(($parentTable = mysqli_fetch_array($parentsQuery, MYSQLI_ASSOC)) != null) {
+        $parents[] = $parentTable;
+    }
+    while(($childrenTable = mysqli_fetch_array($childrenQuery, MYSQLI_ASSOC)) != null) {
+        $children[] = $childrenTable;
     }
 
-    
+    foreach($parents as $parent){
+        echo "Name: " . $parent["name"] . "<br> Surname: " . $parent["surname"] . "<br><br>";
+        foreach($children as $child){
+            if($child["parent_id"] == $parent["id"] && !empty($child["name"]))echo "Child name: " . $child["name"] . "<br>";
+        }
+        echo "<br>";
+    }    
 ?>
 </body>
 </html> 
