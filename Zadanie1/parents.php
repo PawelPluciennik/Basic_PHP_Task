@@ -29,9 +29,8 @@
 
             $chld = "SELECT name FROM children WHERE parent_id=" . $row["id"];
             $reschild = mysqli_query($conn, $chld);
-
             while($rowchld = mysqli_fetch_assoc($reschild)){
-                echo "Child Name: " . $rowchld["name"] . "<br>";
+                if(!empty($rowchld["name"])) echo "Child Name: " . $rowchld["name"] . "<br>";
             }
             echo "<br>";
         }
