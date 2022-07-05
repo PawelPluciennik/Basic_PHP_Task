@@ -29,12 +29,15 @@
     if(isset($_SESSION["name"]) && isset($_SESSION["surname"])){        
         $par = "INSERT INTO `parents` (`name`, `surname`) VALUES ('" . $_SESSION["name"] . "', '" . $_SESSION["surname"] . "')"; 
         $query = mysqli_query($conn, $par);
-        $sqlQuery = 'INSERT INTO `children` (`parent_id`, `name`) VALUES';
+
+        $sqlQuery = "INSERT INTO `children` (`parent_id`, `name`) VALUES";
         $parentId = mysqli_insert_id($conn);
+
         foreach ($_SESSION["children"] as $child) {
-            $sqlQuery.= "('" . $parentID . "', '" . $child . "'),";
+            $sqlQuery.= "('" . $parentId . "', '" . $child . "'),";
         }
         $sqlQuery = substr($sqlQuery,0,-1);
+
         $query = mysqli_query($conn, $sqlQuery);
     }   
     

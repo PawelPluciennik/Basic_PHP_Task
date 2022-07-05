@@ -1,3 +1,6 @@
+<!DOCTYPE html>
+<html>
+<body>
 <?php
     $servername = "localhost";
     $username = "root";
@@ -14,20 +17,30 @@
     if ($conn->connect_error) {
       die("Connection failed: " . $conn->connect_error);
     }
-           
-    $all = "SELECT `parents`.`name`, `surname`, `children`.`name` FROM `parents` JOIN `children` ON `parents`.`id`=`children`.`id`"; 
-    //$all = "SELECT * FROM `parent`"; //TODO
+    $retval = mysqli_select_db( $conn, 'family' );
 
-    $result = mysqli_query($conn, $all);
+    //$all = "SELECT p.id, p.name, p.surname, c.name AS childname FROM parents p JOIN children c ON p.id=c.parent_id;";
+    $par = "SELECT id, name, surname FROM parents";
+    $result = mysqli_query($conn, $par);
     
-
     if (mysqli_num_rows($result) > 0) {
-        // OUTPUT DATA OF EACH ROW
         while($row = mysqli_fetch_assoc($result)) {
-            echo "Roll No: " . $row["Roll_No"]
-            . " - Name: " . $row["Name"]. "<br>";
+            echo "Name: " . $row["name"] . "<br> Surname: " . $row["surname"] . "<br><br>";
+
+            $chld = "SELECT name FROM children WHERE parent_id=" . $row["id"];
+            $reschild = mysqli_query($conn, $chld);
+
+            while($rowchld = mysqli_fetch_assoc($reschild)){
+                echo "Child Name: " . $rowchld["name"] . "<br>";
+            }
+            echo "<br>";
         }
-    } else {
+    } 
+    else {
         echo "0 results";
     }
+
+    
 ?>
+</body>
+</html> 
