@@ -41,5 +41,5 @@
         $query = mysqli_query($conn, $sqlQuery);
     }   
     
-    //header("Location: result.php");
+    header("Location: result.php");
 ?>
