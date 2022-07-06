@@ -21,11 +21,11 @@
     }
     $retval = mysqli_select_db( $conn, 'family' );
 
-    $query = "SELECT id, name, surname FROM parents";
+    $query = "SELECT id, name, surname FROM parents ORDER BY id ASC";
     $parentsQuery = mysqli_query($conn, $query);
     $parents = [];
 
-    $querychld = "SELECT parent_id, name FROM children";
+    $querychld = "SELECT parent_id, name FROM children ORDER BY parent_id ASC";
     $childrenQuery = mysqli_query($conn, $querychld);
     $children = [];
     
@@ -36,10 +36,18 @@
         $children[] = $childrenTable;
     }
 
+    $allchildrens = [];
+    foreach($children as $child){
+        if(empty($allchildrens[$child["parent_id"]] )) {
+            $allchildrens[$child["parent_id"]]  = [];
+        }
+        $allchildrens[$child["parent_id"]][] = $child;
+    }
+    
     foreach($parents as $parent){
         echo "Name: " . $parent["name"] . "<br> Surname: " . $parent["surname"] . "<br><br>";
-        foreach($children as $child){
-            if($child["parent_id"] == $parent["id"] && !empty($child["name"]))echo "Child name: " . $child["name"] . "<br>";
+        foreach($allchildrens[$parent['id']] as $name){
+            if(!empty($name['name'])) echo "Child name: " . $name['name'] . "<br>";
         }
         echo "<br>";
     }    
