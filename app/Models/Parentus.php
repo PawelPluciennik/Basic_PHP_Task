@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Model;
+namespace App\Models;
 
 use App\Model;
 use App\Str;
@@ -16,17 +16,17 @@ class Parentus extends Model
 
         $stmt->execute(['name' => Str::formatData($_SESSION["name"]), 
                         'surname' => Str::formatData($_SESSION["surname"])]);
-        return $this->db->lastInsertedId();
+        return $this->db->lastInsertId();
     }
 
-    public function getPrents(): array{
+    public function getParents(): array{
         $sqlQuery = 'SELECT name, surname FROM parents ORDER BY id ASC';
         
         $stmt = $this->db->prepare($sqlQuery);
 
-        $stmt->execute([$sqlQuery]);
+        $stmt->execute();
 
-        $parents = $stmt->fetch();
+        $parents = $stmt->fetchAll();
 
         return $parents;
     }

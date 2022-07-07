@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Model;
+namespace App\Models;
 
 use App\Model;
 use App\Str;
@@ -23,9 +23,9 @@ class Children extends Model
         
         $stmt = $this->db->prepare($sqlQuery);
 
-        $stmt->execute([$sqlQuery]);
+        $stmt->execute();
 
-        $children = $stmt->fetch();
+        $children = $stmt->fetchAll();
 
         $allchildrens = [];
         foreach($children as $child){

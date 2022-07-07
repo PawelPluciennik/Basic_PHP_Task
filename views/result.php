@@ -1,8 +1,5 @@
 <html>
 <body>
-    <?php 
-        session_start();
-    ?>
     <ul>
         <li> <?= ucfirst($_SESSION["name"]); ?> </li>
         <li> <?= ucfirst($_SESSION["surname"]); ?> </li>
@@ -15,5 +12,7 @@
         }
         ?>
     </ul>
+    <a href="/form">Back</a> 
+    <a href="/">Home</a> 
 </body>
 </html> 

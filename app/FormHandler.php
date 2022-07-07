@@ -1,15 +1,14 @@
 <?php
-    session_start();
+    namespace  App;
 
     use App\View;
     use App\App;
-    use App\Model\Parentus;
-    use App\Model\Children;
+    use App\Models\Parentus;
+    use App\Models\Children;
     use App\Models\AddFamily;
 
 class FormHandler{
-    
-    public function index() :View{
+    public static function index() :View{
         $db = App::db();
 
         $_SESSION["name"] = $_POST['fname'];
@@ -23,7 +22,9 @@ class FormHandler{
         $parentModel = new Parentus();
         $childrenModel = new Children(); 
 
-        (new AddFamily($parentModel, $childrenModel))->add(
+        $fam = new AddFamily($parentModel, $childrenModel);
+
+        $fam->add(
             [
                 'name' => $_SESSION['name'],
                 'surname' => $_SESSION['surname'],
@@ -33,11 +34,16 @@ class FormHandler{
             ]
         );
 
-        return View::make('index');
+        return View::make('result');
+    }
+    public static function readdb() :View {
+        $parentModel = new Parentus();
+        $childrenModel = new Children();
+
+        $parentTable[] = $parentModel->getParents();
+        $childTable[] = $childrenModel->getChildren();
+
+        return View::make('database', ['dbvalue' =>compact('parentTable','childTable')]);
     }
 }
-
-    $database->insertFamily($_SESSION["name"], $_SESSION["surname"], $_SESSION["children"]);
     
-    header("Location: result.php");
-?>

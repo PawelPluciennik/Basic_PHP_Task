@@ -1,6 +1,8 @@
 <?php
 namespace App;
 
+use App\Exceptions\RouteNotFoundException;
+
 class Router {
     private array $routes;
 

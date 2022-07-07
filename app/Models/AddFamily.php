@@ -1,8 +1,8 @@
 <?php
     namespace App\Models;
 
-    use App\Model\Parentus;
-    use App\Model\Children;
+    use App\Models\Parentus;
+    use App\Models\Children;
     use App\Model;
 
 class AddFamily extends Model

@@ -1,11 +1,8 @@
 <html>
-    <head>
-        <title>PHP Test</title>
-    </head>
     <body>
-        <?php echo '<p>Hello World</p>'; ?> 
+        <?php echo '<h1>Select option</h1>'; ?> 
         <a href="form">Form</a> <br>
-        <a href="databaseView.php">Database</a> 
+        <a href="database">Database</a> 
     </body>
 </html>
 
