@@ -1,13 +1,9 @@
 <?php
-class Str {
-    private string $string;
-   
-    function __construct(string $name) {
-        $this->$string = $name;
-    }
 
-    function formatData(): string {
-        return ucfirst($string);
+namespace App;
+
+class Str {
+    static function formatData($str): string {
+        return ucfirst($str);
     }
 }
-?>
