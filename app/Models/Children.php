@@ -32,7 +32,7 @@ class Children extends Model
 
     public function getChild(int $parent_id): array{
         $children = Model::select(
-            ['parent_id', 'name'],
+            ['parent_id', 'name', 'id'],
             'children', 
             'WHERE parent_id=' . $parent_id
         );

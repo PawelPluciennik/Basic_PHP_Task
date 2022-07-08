@@ -13,6 +13,7 @@
         <?php 
         foreach($familyTable['childTable'] as $child){
         ?>
+        <input type="hidden" name="child_id[]" value=<?php echo $child['id'] //here?>>
         <li><input type="text" name="uchild[]" value=<?php echo $child['name'] ?>></li>
         <?php    
         }
