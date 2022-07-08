@@ -15,8 +15,8 @@ class AddFamily extends Model
         try{
             $this->db->beginTransaction();
             
-            $parnetId = $this->parentModel->crete($parentInfo['name'], $parentInfo['surname']);
-            $this->childrenModel->crete($childrenInfo['children'], $parnetId);
+            $parnetId = $this->parentModel->create($parentInfo['name'], $parentInfo['surname']);
+            $this->childrenModel->create($childrenInfo['children'], $parnetId);
             
             $this->db->commit();
         } catch (\Throwable $e){

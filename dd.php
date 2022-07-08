@@ -2,6 +2,8 @@
 
 function dd(...$args) {
     echo '<pre>';
-    var_dump($args);
+    foreach($args as $arg)
+    var_dump($arg);
     echo '</pre>';
+    die;
 }

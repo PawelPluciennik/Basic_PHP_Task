@@ -15,6 +15,11 @@ class FormHandler{
         $_SESSION["surname"] = $_POST['fsurname'];
         $_SESSION["children"] = $_POST['child'];
         
+        $sesionChildren = [];
+        foreach($_SESSION["children"] as $child){
+            if(!empty($child)) $sesionChildren[] = $child;  
+        }
+        
         if($_SESSION["children"] != null) {
             asort($_SESSION["children"]);
         }
@@ -30,7 +35,7 @@ class FormHandler{
                 'surname' => $_SESSION['surname'],
             ],
             [
-                'children' => $_SESSION['children'],
+                'children' => $sesionChildren,
             ]
         );
 
@@ -40,9 +45,8 @@ class FormHandler{
         $parentModel = new Parentus();
         $childrenModel = new Children();
 
-        $parentTable[] = $parentModel->getParents();
-        $childTable[] = $childrenModel->getChildren();
-
+        $parentTable = $parentModel->getParents();
+        $childTable = $childrenModel->getChildren();
         return View::make('database', ['dbvalue' =>compact('parentTable','childTable')]);
     }
 }

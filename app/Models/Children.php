@@ -7,7 +7,7 @@ use App\Str;
 
 class Children extends Model
 {
-    public function crete(array $children, int $parentId): void{
+    public function create(array $children, int $parentId): void{
         foreach ($children as $child){
             $sqlQuery = 'INSERT INTO children (`parent_id`, `name`) 
             VALUES (:parent_id,:name)'; 
@@ -26,7 +26,6 @@ class Children extends Model
         $stmt->execute();
 
         $children = $stmt->fetchAll();
-
         $allchildrens = [];
         foreach($children as $child){
             if(empty($allchildrens[$child["parent_id"]] )) {

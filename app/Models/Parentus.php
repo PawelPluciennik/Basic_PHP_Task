@@ -8,7 +8,7 @@ use App\Str;
 class Parentus extends Model
 {
 
-    public function crete(string $name, string $surname): int{
+    public function create(string $name, string $surname): int{
         $sqlQuery = 'INSERT INTO parents (`name`, `surname`) 
             VALUES (:name,:surname)'; 
         
@@ -20,7 +20,7 @@ class Parentus extends Model
     }
 
     public function getParents(): array{
-        $sqlQuery = 'SELECT name, surname FROM parents ORDER BY id ASC';
+        $sqlQuery = 'SELECT id, name, surname FROM parents ORDER BY id ASC';
         
         $stmt = $this->db->prepare($sqlQuery);
 
