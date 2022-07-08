@@ -7,27 +7,27 @@ use App\Str;
 
 class Parentus extends Model
 {
-
     public function create(string $name, string $surname): int{
-        $sqlQuery = 'INSERT INTO parents (`name`, `surname`) 
-            VALUES (:name,:surname)'; 
-        
-        $stmt = $this->db->prepare($sqlQuery);
-
-        $stmt->execute(['name' => Str::formatData($_SESSION["name"]), 
-                        'surname' => Str::formatData($_SESSION["surname"])]);
-        return $this->db->lastInsertId();
+        return Model::insert(
+            'parents', 
+            ['name', 'surname'], 
+            [Str::formatData($name), Str::formatData($surname)]
+        );
     }
 
     public function getParents(): array{
-        $sqlQuery = 'SELECT id, name, surname FROM parents ORDER BY id ASC';
+        // $sqlQuery = 'SELECT id, name, surname FROM parents ORDER BY id ASC';
         
-        $stmt = $this->db->prepare($sqlQuery);
+        // $stmt = $this->db->prepare($sqlQuery);
 
-        $stmt->execute();
+        // $stmt->execute();
 
-        $parents = $stmt->fetchAll();
+        // $parents = $stmt->fetchAll();
 
-        return $parents;
+        return Model::select(
+            ['id', 'name', 'surname'],
+            'parents', 
+            'id'
+        );
     }
 }
