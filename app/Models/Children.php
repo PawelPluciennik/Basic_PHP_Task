@@ -17,7 +17,8 @@ class Children extends Model
         $children = Model::select(
             ['parent_id', 'name'],
             'children', 
-            'parent_id'
+            '',
+            'ORDER BY parent_id'
         );
         $allchildrens = [];
         foreach($children as $child){
@@ -27,5 +28,23 @@ class Children extends Model
             $allchildrens[$child["parent_id"]][] = $child;
         }
         return $allchildrens;
+    }
+
+    public function getChild(int $parent_id): array{
+        $children = Model::select(
+            ['parent_id', 'name'],
+            'children', 
+            'WHERE parent_id=' . $parent_id
+        );
+        return $children;
+    }
+
+    public function updateChildren(array $names, int $parent_id): void {
+        Model::update(
+        'children',
+        $parent_id,
+        'id && parent_id', //zle podazapytanie, trzeba zmienic na id dziekca = id
+        ['name' => $names]
+        );
     }
 }

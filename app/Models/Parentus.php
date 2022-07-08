@@ -16,18 +16,28 @@ class Parentus extends Model
     }
 
     public function getParents(): array{
-        // $sqlQuery = 'SELECT id, name, surname FROM parents ORDER BY id ASC';
-        
-        // $stmt = $this->db->prepare($sqlQuery);
-
-        // $stmt->execute();
-
-        // $parents = $stmt->fetchAll();
-
         return Model::select(
             ['id', 'name', 'surname'],
             'parents', 
-            'id'
+            '',
+            'ORDER BY id'
+        );
+    }
+
+    public function getParent(int $id): array{
+        return Model::select(
+            ['id', 'name', 'surname'],
+            'parents',
+            'WHERE id=' . $id
+        );
+    }
+
+    public function updateParent(int $id, string $name, string $surname): void {
+        Model::update(
+            'parents',
+            $id,
+            'id',
+            ['name' => $name, 'surname' => $surname]
         );
     }
 }

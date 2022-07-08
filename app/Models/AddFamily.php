@@ -26,5 +26,21 @@ class AddFamily extends Model
             throw $e;
         }
     }
+
+    public function updateFamily(array $parentInfo, array $childrenInfo): void {
+        try{
+            $this->db->beginTransaction();
+            
+            $this->parentModel->updateParent($parentInfo['id'], $parentInfo['name'], $parentInfo['surname']);
+            $this->childrenModel->updateChildren($childrenInfo['children'], $parentInfo['id']);
+            
+            $this->db->commit();
+        } catch (\Throwable $e){
+            if($this->db->inTransaction()){
+                $this->db->rollback();
+            }
+            throw $e;
+        }
+    }
     
 }

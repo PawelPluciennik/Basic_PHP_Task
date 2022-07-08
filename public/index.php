@@ -39,6 +39,16 @@
         [FormHandler::class, 'readdb']
     );
 
+    $router->register(
+        '/database/edit',
+        [FormHandler::class, 'getFamily']
+    );
+
+    $router->register(
+        '/database/updated',
+        [FormHandler::class, 'updateFamily']
+    );
+
     (new App($router,
         ['uri' => $_SERVER['REQUEST_URI'], 'method' => $_SERVER['REQUEST_METHOD']],
         new Config($_ENV)

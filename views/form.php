@@ -15,7 +15,7 @@
         <li><input type="text" name="child[]"></li>
     </ul> 
   
-  <input type="submit" name="submit-btn" value='Wyślij'> <br>
+  <input type="submit" name="submit-btn" value='Send'> <br>
   <a href="/">Back</a> 
   <?php
     if(isset($_POST['submit-btn'])){
