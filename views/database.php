@@ -11,6 +11,7 @@
         <li> <?= "Surname: " . $parent['surname'] ?> </li>
         <ul>
             <?php
+            if($dbvalue['childTable'][$parent['id']] != null)
             foreach($dbvalue['childTable'][$parent['id']] as $name){
             ?>
                 <form method="post" action="/database/deleteChild?id=<?=$name['id']?>">
