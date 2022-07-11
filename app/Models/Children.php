@@ -15,7 +15,7 @@ class Children extends Model
 
     public function getChildren(): array{
         $children = Model::select(
-            ['parent_id', 'name'],
+            ['parent_id', 'name', 'id'],
             'children', 
             '',
             'ORDER BY parent_id'
@@ -39,12 +39,31 @@ class Children extends Model
         return $children;
     }
 
-    public function updateChildren(array $names, int $parent_id): void {
-        Model::update(
-        'children',
-        $parent_id,
-        'id && parent_id', //zle podazapytanie, trzeba zmienic na id dziekca = id
-        ['name' => $names]
+    public function updateChildren(array $children, int $parent_id): void {
+        foreach ($children as $id => $child) {
+            Model::update(
+                'children',
+                $parent_id,
+                'id = ' . $id . ' AND parent_id',
+                ['name' => $child]
+            );
+        }
+    }
+
+    public function deleteChildren(int $parent_id): void {
+        Model::delete(
+            'children',
+            $parent_id,
+            'parent_id'
         );
     }
+
+    public function deleteChild(int $id): void {
+        Model::delete(
+            'children',
+            $id,
+            'id'
+        );
+    }
+    
 }

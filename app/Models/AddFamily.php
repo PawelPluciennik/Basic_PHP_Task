@@ -32,7 +32,23 @@ class AddFamily extends Model
             $this->db->beginTransaction();
             
             $this->parentModel->updateParent($parentInfo['id'], $parentInfo['name'], $parentInfo['surname']);
-            $this->childrenModel->updateChildren($childrenInfo['children'], $parentInfo['id']);
+            $this->childrenModel->updateChildren($childrenInfo, $parentInfo['id']);
+            
+            $this->db->commit();
+        } catch (\Throwable $e){
+            if($this->db->inTransaction()){
+                $this->db->rollback();
+            }
+            throw $e;
+        }
+    }
+
+    public function deleteFamily(array $parentInfo, array $childrenInfo): void {
+        try{
+            $this->db->beginTransaction();
+            
+            $this->childrenModel->deleteChildren($parentInfo['id']);
+            $this->parentModel->deleteParent($parentInfo['id']);
             
             $this->db->commit();
         } catch (\Throwable $e){

@@ -3,7 +3,7 @@
     <?php
 
     use App\FormHandler;
-
+    
     foreach($dbvalue['parentTable'] as $parent){ ?>
     <h2>Family</h2>
     <ul>
@@ -13,35 +13,25 @@
             <?php
             foreach($dbvalue['childTable'][$parent['id']] as $name){
             ?>
-                <li> <?= "Child name: " . $name['name']?></li>
+                <form method="post" action="/database/deleteChild?id=<?=$name['id']?>">
+                    <li> <?= "Child name: " . $name['name']?>
+                    <input type="submit" name="delchild-btn" value='Delete child'></li>
+                </form>
             <?php
             }
             ?>
         </ul>
     </ul>
     <form method="post" action="/database/edit?id=<?=$parent['id']?>">
-
         <input type="submit" name="edit-btn" value='Edit'>
+    </form>
+    <form method="post" action="/database/deleteFamily?id=<?=$parent['id']?>">
         <input type="submit" name="del-btn" value='Delete'>
-        <br>
-        <br>
-
-        <?php
-        if(isset($_POST['edit-btn'])){
-            header("/database/edit");
-            exit;
-        }
-        if(isset($_POST['del-btn'])){
-            header("/form/result");
-            exit;
-        }
-        ?>
-        </form>
-        <?php
+    </form>
+        <br>        
+    <?php
     }
     ?>
-    
-    
     <a href="/">Home</a> 
 </body>
 </html> 

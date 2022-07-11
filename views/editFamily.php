@@ -13,9 +13,9 @@
         <?php 
         foreach($familyTable['childTable'] as $child){
         ?>
-        <input type="hidden" name="child_id[]" value=<?php echo $child['id'] //here?>>
+        <input type="hidden" name="uchild_id[]" value=<?php echo $child['id'] ?>>
         <li><input type="text" name="uchild[]" value=<?php echo $child['name'] ?>></li>
-        <?php    
+        <?php  
         }
         ?>
     </ul> 
@@ -23,12 +23,6 @@
   <input type="submit" name="submit-btn" value='Send'> <br>
   <a href="/">Home</a> 
   <a href="/database">Back</a> 
-  <?php
-    if(isset($_POST['submit-btn'])){
-      //header("/database/updated");
-    exit;
-    }
-  ?>
 </form>
 </body>
 </html> 

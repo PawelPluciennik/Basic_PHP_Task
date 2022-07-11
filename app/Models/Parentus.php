@@ -40,4 +40,12 @@ class Parentus extends Model
             ['name' => $name, 'surname' => $surname]
         );
     }
+
+    public function deleteParent(int $id): void {
+        Model::delete(
+            'parents',
+            $id,
+            'id'
+        );
+    }
 }

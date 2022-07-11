@@ -61,15 +61,13 @@ class FormHandler{
 
     public static function updateFamily($array): View {
         $_SESSION["id"] = $_POST['id'];
-       // dd($_POST);
         $_SESSION["name"] = $_POST['uname'];
         $_SESSION["surname"] = $_POST['usurname'];
         $_SESSION["children"] = $_POST['uchild'];
-        
-        $sesionChildren = [];
-        foreach($_SESSION["children"] as $child){
-            if(!empty($child)) $sesionChildren[] = $child;  
-        }
+        $_SESSION["childenId"] = $_POST['uchild_id'];
+
+        $sesionChildrenId = array_map('intval', $_SESSION["childenId"]);
+        $children = array_combine($sesionChildrenId, $_SESSION["children"]);
         
         if($_SESSION["children"] != null) {
             asort($_SESSION["children"]);
@@ -79,18 +77,47 @@ class FormHandler{
         $childrenModel = new Children();
 
         $fam = new AddFamily($parentModel, $childrenModel);
-
+        
         $fam->updateFamily(
             [
                 'id' => $_SESSION["id"],
                 'name' => $_SESSION["name"],
                 'surname' => $_SESSION["surname"],
             ],
-            [
-                'parent_id' => $_SESSION["id"],
-                'children' => $sesionChildren,
-            ]
+            
+            $children,
+            
         );
+        
+        $parentTable = $parentModel->getParents();
+        $childTable = $childrenModel->getChildren();
+        return View::make('database', ['dbvalue' => compact('parentTable','childTable')]);
+    }
+
+    public static function deleteFamily($array): View {
+        $parentModel = new Parentus();
+        $childrenModel = new Children();
+
+        $fam = new AddFamily($parentModel, $childrenModel);
+        
+        $fam->deleteFamily(
+            $array,
+            $array,
+        );
+        
+        $parentTable = $parentModel->getParents();
+        $childTable = $childrenModel->getChildren();
+        return View::make('database', ['dbvalue' => compact('parentTable','childTable')]);
+    }
+
+    public static function deleteChild($array): View {
+        $parentModel = new Parentus();
+        $childrenModel = new Children();
+        
+        $id = array_map('intval', $array);
+        
+        $childrenModel->deleteChild($id['id']);
+        
         $parentTable = $parentModel->getParents();
         $childTable = $childrenModel->getChildren();
         return View::make('database', ['dbvalue' => compact('parentTable','childTable')]);

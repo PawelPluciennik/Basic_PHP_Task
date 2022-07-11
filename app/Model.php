@@ -44,7 +44,16 @@ abstract class Model{
         }
         $sqlQuery.=implode(',',$parsedValues);
         $sqlQuery.=' WHERE '.$idType.' = '.$id;
-        var_dump($sqlQuery);
+
+        $stmt = $this->db->prepare($sqlQuery);
+
+        $stmt->execute();
+    }
+
+    public function delete(string $tableName, int $id, string $idType): void {
+        $sqlQuery = 'DELETE FROM ' . $tableName . ' '; 
+        $sqlQuery.= 'WHERE ' . $id . ' = ' . $idType;
+        
         $stmt = $this->db->prepare($sqlQuery);
 
         $stmt->execute();
