@@ -1,16 +1,18 @@
-<?php 
-namespace app;
-
-use stdClass;
+<?php
+namespace App;
 
 abstract class MainApi {
     private string $url;
 
-    public function __construct(string $URL) {
-        $this->url = $URL;
+    public function setUrl(string $seturl){
+        $this->url = $seturl;
     }
+    
+    abstract public function __construct(string $URL);
+    
+    public function request(string $route){
+        $this->url .= $route;
 
-    public function getRoute(string $route): array | stdClass{
         $ch = curl_init();
 
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -19,8 +21,8 @@ abstract class MainApi {
         $response = curl_exec($ch);
 
         curl_close($ch);
-        $data = json_decode($response);
         
-        return $data->$route;
+        return json_decode($response);
     }
+
 }

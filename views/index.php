@@ -3,11 +3,12 @@
         <?php
         include_once '../App/weather.php';
 
-        use App\WeatherApi;
-        use App\MainApi;
+        use App\WeatherFactory;
+
+        // $ok = new WeatherApi("https://api.openweathermap.org/data/2.5/weather?id=3084130&lang=en&units=metric&APPID=799e76138e7dd2caa2be79534ac8bb8e");
+        $factory = new WeatherFactory();
+        dd($factory->create());
         
-        $ok = new MainApi("https://api.openweathermap.org/data/2.5/weather?id=3084130&lang=en&units=metric&APPID=799e76138e7dd2caa2be79534ac8bb8e");
-        dd($ok->getRoute("weather"));
         ?> 
         <h2><?php echo $data->name; ?> Weather Status</h2>
         <div class="time">
