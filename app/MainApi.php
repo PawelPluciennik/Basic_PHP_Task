@@ -2,27 +2,19 @@
 namespace App;
 
 abstract class MainApi {
-    private string $url;
-
-    public function setUrl(string $seturl){
-        $this->url = $seturl;
-    }
+    public function __construct(private string $url){}
     
-    abstract public function __construct(string $URL);
-    
-    public function request(string $route){
-        $this->url .= $route;
-
+    protected function request(string $route){
+        $tempurl = $this->url . $route;
         $ch = curl_init();
 
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_URL, $this->url);  
+        curl_setopt($ch, CURLOPT_URL, $tempurl);  
 
         $response = curl_exec($ch);
 
         curl_close($ch);
         
-        return json_decode($response);
+        return json_decode($response,true);
     }
-
 }

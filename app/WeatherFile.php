@@ -3,7 +3,7 @@ namespace App;
 
 class WeatherFile implements WeatherInterface {
   
-  public function getWeather(string $route = 'main', string $value = ''): array{
+  public function getWeather(): array{
     $json = file_get_contents('../weather_14.json');
     $json_data = json_decode($json,true);
 
@@ -11,8 +11,7 @@ class WeatherFile implements WeatherInterface {
     
     $data = $WF->findCityById(3084130, $json_data);
     
-    if(empty($value))return $data[$route];
-    return $data[$route][$value];
+    return $data;
   } 
 
   public function findCityById(int $id, array $json_data): array{
